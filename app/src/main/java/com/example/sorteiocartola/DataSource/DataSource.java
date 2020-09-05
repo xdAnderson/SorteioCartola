@@ -10,10 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.example.sorteiocartola.DataModel.TimesDataModel;
 import com.example.sorteiocartola.Model.TimeModel;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataSource extends SQLiteOpenHelper {
     Cursor cursor;
@@ -31,9 +28,9 @@ public class DataSource extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         try{
 
+
             sqLiteDatabase.execSQL(TimesDataModel.criarTabelaTimes());
             sqLiteDatabase.execSQL(TimesDataModel.criarTabelaTimesSorteados());
-            sqLiteDatabase.execSQL(TimesDataModel.inserirTimes());
         }catch (Exception e){
 
         }
@@ -43,15 +40,12 @@ public class DataSource extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
-    public boolean insert(String tabela, ContentValues dados){
-        boolean sucesso = true;
-        try{
-            sucesso = db.insert(tabela, null, dados)>0;
-        }catch (Exception e){
-            sucesso = false;
-
-        }
-        return sucesso;
+    public boolean insert(String tabela, String nome){
+        String querySalvarTime;
+        querySalvarTime = "INSERT INTO times_sorteados VALUES";
+        querySalvarTime += "(NULL,'"+nome+"',0.0)";
+        db.execSQL(querySalvarTime);
+        return true;
     }
 
     public boolean deletar(String tabela, String id){
@@ -70,10 +64,10 @@ public class DataSource extends SQLiteOpenHelper {
         return sucesso;
     }
 
-    public ArrayList<TimeModel> getAllTimesModel(){
+    public ArrayList<TimeModel> getAllTimesModel(String tabela){
         TimeModel obj;
         ArrayList<TimeModel> lista = new ArrayList<>();
-        String sql = "SELECT * FROM "+ TimesDataModel.getTabelaTimesSorteados();
+        String sql = "SELECT * FROM "+ tabela;
         cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToFirst()){
@@ -81,12 +75,38 @@ public class DataSource extends SQLiteOpenHelper {
                 obj = new TimeModel();
                 obj.setId(cursor.getString(cursor.getColumnIndex(TimesDataModel.getId())));
                 obj.setNome(cursor.getString(cursor.getColumnIndex(TimesDataModel.getNome())));
-
+                obj.setPt((float) cursor.getDouble(cursor.getColumnIndex(TimesDataModel.getPt())));
                 lista.add(obj);
 
             }while(cursor.moveToNext());
         }
         cursor.close();
         return lista;
+    }
+
+    public boolean tabelaVazia(String tabela){
+        String sql = "SELECT * FROM "+ tabela;
+        cursor = db.rawQuery(sql, null);
+        boolean vazia;
+
+        if(cursor.moveToFirst()){
+            vazia=false;
+        }else
+            vazia=true;
+        return vazia;
+    }
+
+    public void insertTimes(String[] str){
+        String queryInserirTimes;
+        int tamanhoString = str.length;
+        queryInserirTimes = "INSERT INTO times VALUES";
+
+        for(int i=0; i<tamanhoString;i++){
+            queryInserirTimes += "(NULL, '"+str[i]+"', 0.0)";
+            if(i<tamanhoString-1){
+                queryInserirTimes += ", ";
+            }
+        }
+        db.execSQL(queryInserirTimes);
     }
 }

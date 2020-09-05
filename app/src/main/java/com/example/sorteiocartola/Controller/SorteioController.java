@@ -11,32 +11,26 @@ import com.example.sorteiocartola.Model.TimeModel;
 
 import java.util.List;
 
+import static java.sql.Types.NULL;
+
 public class SorteioController extends DataSource {
     ContentValues dados;
     public SorteioController(@Nullable Context context) {
         super(context);
     }
 
-    public boolean salvar (String tabela, TimeModel obj){
+    public boolean salvar (String tabela, String nome){
         boolean sucesso;
-        dados = new ContentValues();
-        dados.put(TimesDataModel.getId(), obj.getId());
-        dados.put(TimesDataModel.getNome(), obj.getNome());
 
-        sucesso = insert(tabela, dados);
+        sucesso = insert(tabela, nome);
 
         return sucesso;
     }
 
-    public boolean sortear(TimeModel obj){
-        boolean sucesso = true;
-        dados = new ContentValues();
-        dados.put(TimesDataModel.getId(), obj.getId());
-
-
-
-        return sucesso;
+    public void alimentarTabela(String [] str){
+        insertTimes(str);
     }
+
 
     public boolean deletar(String tabela, TimeModel obj){
         boolean sucesso = true;
@@ -56,7 +50,10 @@ public class SorteioController extends DataSource {
         return sucesso;
     }
 
-    public List<TimeModel> listar(){
-        return getAllTimesModel();
+    public List<TimeModel> listar(String tabela){
+        return getAllTimesModel(tabela);
+    }
+    public boolean tabelaEstaVazia(String tabela){
+        return tabelaVazia(tabela);
     }
 }

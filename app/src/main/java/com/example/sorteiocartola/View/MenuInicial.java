@@ -26,7 +26,7 @@ public class MenuInicial extends AppCompatActivity {
         btSortearTim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getApplicationContext(), Chave.class);
+                intent = new Intent(getApplicationContext(), SortearTimes.class);
                 startActivity(intent);
             }
         });
@@ -34,7 +34,7 @@ public class MenuInicial extends AppCompatActivity {
         btCombinacoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getApplicationContext(), SortearTimes.class);
+                intent = new Intent(getApplicationContext(), Chave.class);
                 startActivity(intent);
             }
         });

@@ -3,6 +3,7 @@ package com.example.sorteiocartola.Model;
 public class TimeModel {
     private String id;
     private String nome;
+    private float pt;
 
 
     public String getId() {
@@ -21,4 +22,11 @@ public class TimeModel {
         this.nome = nome;
     }
 
+    public float getPt() {
+        return pt;
+    }
+
+    public void setPt(float pt) {
+        this.pt = pt;
+    }
 }
