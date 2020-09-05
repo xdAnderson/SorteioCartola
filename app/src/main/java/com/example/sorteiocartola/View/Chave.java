@@ -1,11 +1,19 @@
 package com.example.sorteiocartola.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sorteiocartola.Adapter.TimeAdapter;
 import com.example.sorteiocartola.Controller.SorteioController;
@@ -22,16 +30,63 @@ public class Chave extends AppCompatActivity {
     DataSource ds;
     List<TimeModel> timesSorteados;
     RecyclerView rv;
+    EditText etFim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chave);
-
+        etFim = findViewById(R.id.et_fim);
         ds = new DataSource((getBaseContext()));
         sorteioController = new SorteioController(getBaseContext());
         timesSorteados = sorteioController.getAllTimesModel("times_sorteados");
         configurarRecycler(timesSorteados);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_itens, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId()==R.id.limpar){
+            //Toast.makeText(this,"Limpando combinações...",Toast.LENGTH_SHORT).show();
+            AlertDialog alertDialog;
+            //Cria o gerador do AlertDialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            //define o titulo
+            builder.setTitle("Descartar combinações?");
+            //define a mensagem
+            builder.setMessage("Você está prestes a remover todas as combinações realizadas, tem certeza disso?");
+            //define um botão como positivo
+            builder.setPositiveButton("Sim, descartar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface arg0, int arg1) {
+                    Toast.makeText(Chave.this, "Limpando combinações...", Toast.LENGTH_SHORT).show();
+                    ds.redefinirTabelas();
+                    String[] stringNome = getResources().getStringArray(R.array.nomes);
+                    sorteioController.alimentarTabela(stringNome);
+                    timesSorteados = sorteioController.getAllTimesModel("times_sorteados");
+                    configurarRecycler(timesSorteados);
+                }
+            });
+            //define um botão como negativo.
+            builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface arg0, int arg1) {
+                }
+            });
+            //cria o AlertDialog
+            alertDialog = builder.create();
+            //Exibe
+            alertDialog.show();
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void configurarRecycler(List<TimeModel> times) {
@@ -41,8 +96,16 @@ public class Chave extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Adiciona o adapter que irá anexar os objetos à lista.
-        TimeAdapter adapter = new TimeAdapter(times);
+        TimeAdapter adapter = new TimeAdapter(times, this);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
+
+    @Override
+    public void onBackPressed() {
+        //etFim.setFocusable(true);
+        getWindow().getDecorView().clearFocus();
+        super.onBackPressed();
+
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Chave">
+    tools:context=".View.Chave"><![CDATA[
 
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,6 +15,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="br.com.luiztools.androidcrud.MainActivity"
     tools:showIn="@layout/activity_main">
+
+    ]]>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -30,6 +32,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_list" />
+
+    <EditText
+        android:id="@+id/et_fim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:focusable="auto"
+        android:inputType="textPersonName"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

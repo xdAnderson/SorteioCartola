@@ -26,18 +26,6 @@ public class SplashScreen extends AppCompatActivity {
                     String[] stringNome = getResources().getStringArray(R.array.nomes);
                     sorteioController.alimentarTabela(stringNome);
                 }
-
-                /*obj.setId("1234");
-                obj.setNome("Teste");
-                obj.setNome_cartola("Teste FC");
-                obj.setSlug("teste_fc");
-                obj.setSorteado(0);
-                obj.setPonto_rodada1("5");
-
-                obj.setPonto_rodada3("32.3");
-                SorteioController sorteioController= new SorteioController(getBaseContext());
-                //sorteioController.salvar(obj);
-                sorteioController.alterar(obj);*/
                 Intent i = new Intent(getApplication(), MenuInicial.class);
                 startActivity(i);
                 finish();

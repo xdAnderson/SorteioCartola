@@ -10,6 +10,8 @@ import com.example.sorteiocartola.R;
 
 public class TimeHolder extends RecyclerView.ViewHolder {
 
+    public TextView tvId1;
+    public TextView tvId2;
     public TextView tvTime1;
     public TextView tvTime2;
     public EditText etPt1;
@@ -19,6 +21,8 @@ public class TimeHolder extends RecyclerView.ViewHolder {
 
     public TimeHolder(@NonNull View itemView) {
         super(itemView);
+        tvId1 = itemView.findViewById(R.id.tv_id1);
+        tvId2 = itemView.findViewById(R.id.tv_id2);
         tvTime1 = itemView.findViewById(R.id.tv_chave_time1);
         tvTime2 = itemView.findViewById(R.id.tv_chave_time2);
         etPt1 = itemView.findViewById(R.id.et_pt_time1);

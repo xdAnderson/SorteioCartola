@@ -1,22 +1,30 @@
 package com.example.sorteiocartola.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sorteiocartola.Controller.SorteioController;
 import com.example.sorteiocartola.Model.TimeModel;
 import com.example.sorteiocartola.R;
 
 import java.util.List;
 
 public class TimeAdapter extends RecyclerView.Adapter<TimeHolder> {
-
+    Context context;
+    SorteioController sorteioController;
+    TimeModel timeModel;
+    int positionAux1;
+    int positionAux2;
     private final List<TimeModel> times;
 
-    public TimeAdapter(List<TimeModel> times) {
+    public TimeAdapter(List<TimeModel> times, Context context) {
         this.times = times;
+        this.context = context;
     }
 
     @NonNull
@@ -26,35 +34,107 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimeHolder holder, int position) {
-        int positionAux2 = times.size()-(times.size()-position-1);
-        int positionAux1 = position*2;
-        if(positionAux1<times.size()) {
-            float pt1 = times.get(positionAux1).getPt();
-            holder.tvTime1.setText(times.get(positionAux1).getNome());
-            holder.etPt1.setText(String.valueOf(pt1));
+    public void onBindViewHolder(@NonNull final TimeHolder holder, int position) {
+        positionAux1 = position*2;
+        positionAux2 = positionAux1+1;
+        sorteioController = new SorteioController(context);
+        timeModel = new TimeModel();
 
-            float pt2 = times.get(positionAux2).getPt();
+
+        if(positionAux1<times.size()) {
+            holder.tvTime1.setText(times.get(positionAux1).getNome());
+            holder.etPt1.setText(times.get(positionAux1).getPt()+"");
+            holder.tvId1.setText(times.get(positionAux1).getId());
+//            if (Float.parseFloat(holder.etPt1.getText().toString()) < Float.parseFloat(holder.etPt2.getText().toString())) {
+//                holder.view1.setBackgroundColor(0xFFFFAB91);
+//                holder.view2.setBackgroundColor(0xFFA5D6A7);
+//            } else {
+//                if (Float.parseFloat(holder.etPt2.getText().toString()) < Float.parseFloat(holder.etPt1.getText().toString())) {
+//                    holder.view2.setBackgroundColor(0xFFFFAB91);
+//                    holder.view1.setBackgroundColor(0xFFA5D6A7);
+//                }
+//            }
+
+            holder.etPt1.setFocusable(true);
+            holder.etPt1.setFocusableInTouchMode(true);
+            holder.etPt1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) {
+                        timeModel.setNome(holder.tvTime1.getText().toString());
+                        timeModel.setId(holder.tvId1.getText().toString());
+                        timeModel.setPt(Float.parseFloat(holder.etPt1.getText().toString()));
+                        sorteioController.alterar(timeModel);
+
+                        if (Float.parseFloat(holder.etPt1.getText().toString()) < Float.parseFloat(holder.etPt2.getText().toString())) {
+                            holder.view1.setBackgroundColor(0xFFFFAB91);
+                            holder.view2.setBackgroundColor(0xFFA5D6A7);
+                        } else {
+                            if (Float.parseFloat(holder.etPt2.getText().toString()) < Float.parseFloat(holder.etPt1.getText().toString())) {
+                                holder.view2.setBackgroundColor(0xFFFFAB91);
+                                holder.view1.setBackgroundColor(0xFFA5D6A7);
+                            }
+                        }
+
+                    }
+                }
+            });
+
+            holder.tvId2.setText(times.get(positionAux2).getId());
             holder.tvTime2.setText(times.get(positionAux2).getNome());
-            holder.etPt2.setText(String.valueOf(pt2));
-            if (pt1 < pt2) {
+            holder.etPt2.setText(times.get(positionAux2).getPt()+"");
+//            if (Float.parseFloat(holder.etPt1.getText().toString()) < Float.parseFloat(holder.etPt2.getText().toString())) {
+//                holder.view1.setBackgroundColor(0xFFFFAB91);
+//                holder.view2.setBackgroundColor(0xFFA5D6A7);
+//            } else {
+//                if (Float.parseFloat(holder.etPt2.getText().toString()) < Float.parseFloat(holder.etPt1.getText().toString())) {
+//                    holder.view2.setBackgroundColor(0xFFFFAB91);
+//                    holder.view1.setBackgroundColor(0xFFA5D6A7);
+//                }
+//            }
+            holder.etPt2.setFocusable(true);
+            holder.etPt2.setFocusableInTouchMode(true);
+            holder.etPt2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) {
+                        timeModel.setNome(holder.tvTime2.getText().toString());
+                        timeModel.setId(holder.tvId2.getText().toString());
+                        timeModel.setPt(Float.parseFloat(holder.etPt2.getText().toString()));
+                        sorteioController.alterar(timeModel);
+                        if (Float.parseFloat(holder.etPt1.getText().toString()) < Float.parseFloat(holder.etPt2.getText().toString())) {
+                            holder.view1.setBackgroundColor(0xFFFFAB91);
+                            holder.view2.setBackgroundColor(0xFFA5D6A7);
+                        } else {
+                            if (Float.parseFloat(holder.etPt2.getText().toString()) < Float.parseFloat(holder.etPt1.getText().toString())) {
+                                holder.view2.setBackgroundColor(0xFFFFAB91);
+                                holder.view1.setBackgroundColor(0xFFA5D6A7);
+                            }
+                        }
+
+                    }
+                }
+            });
+
+
+
+            if (Float.parseFloat(holder.etPt1.getText().toString()) < Float.parseFloat(holder.etPt2.getText().toString())) {
                 holder.view1.setBackgroundColor(0xFFFFAB91);
                 holder.view2.setBackgroundColor(0xFFA5D6A7);
             } else {
-                if (pt2 < pt1) {
+                if (Float.parseFloat(holder.etPt2.getText().toString()) < Float.parseFloat(holder.etPt1.getText().toString())) {
                     holder.view2.setBackgroundColor(0xFFFFAB91);
                     holder.view1.setBackgroundColor(0xFFA5D6A7);
                 }
             }
-        }/*
-        if(positionAux==times.size()-1){
-            position=times.size()-1;
-        }*/
 
+        }
     }
 
     @Override
     public int getItemCount() {
-        return times != null ? times.size() : 0;
+        return times != null ? times.size()/2 : 0;
     }
+
+
 }

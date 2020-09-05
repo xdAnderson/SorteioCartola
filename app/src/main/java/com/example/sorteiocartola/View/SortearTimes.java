@@ -2,11 +2,16 @@ package com.example.sorteiocartola.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,14 +52,23 @@ public class SortearTimes extends AppCompatActivity {
 
         btSortear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
+
                 lista1 = new ArrayList<TimeModel>();
-                TimeModel time1;
-                TimeModel time2;
+                final TimeModel time1;
+                final TimeModel time2;
                 lista1 = sorteioController.getAllTimesModel("times");
                 if(lista1.size()<2){
                     Toast.makeText(getApplicationContext(),"Todos os times foram sorteados, veja as Chaves.",Toast.LENGTH_LONG).show();
                 }else {
+                    final ProgressDialog dialog =
+                            new ProgressDialog(SortearTimes.this);
+                    dialog.setMessage("Sorteando...");
+                    dialog.setIndeterminate(false);
+                    dialog.setCanceledOnTouchOutside(true);
+                    dialog.setCancelable(true);
+                    dialog.show();
+
                     time1 = sorteioAleatorio(lista1);
                     sorteioController.salvar(TimesDataModel.getTabelaTimesSorteados(), time1.getNome());
                     sorteioController.deletar(TimesDataModel.getTabelaTimes(), time1);
@@ -63,14 +77,21 @@ public class SortearTimes extends AppCompatActivity {
                     time2 = sorteioAleatorio(lista1);
                     sorteioController.salvar(TimesDataModel.getTabelaTimesSorteados(), time2.getNome());
                     sorteioController.deletar(TimesDataModel.getTabelaTimes(), time2);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            tvTime1.setText(time1.getNome());
+                            tvTime2.setText(time2.getNome());
+                            dialog.dismiss();
+                        }
+                    }, 1500);
 
-                    tvTime1.setText(time1.getNome());
-                    tvTime2.setText(time2.getNome());
 
                     lista1 = sorteioController.getAllTimesModel("times");
                     lista2 = sorteioController.getAllTimesModel("times_sorteados");
                     int restaSortear = lista1.size() + lista2.size();
                     tvNumSorteados.setText(lista2.size() + "/" + restaSortear);
+
                 }
             }
         });

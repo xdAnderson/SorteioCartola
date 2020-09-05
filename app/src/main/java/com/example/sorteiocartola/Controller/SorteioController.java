@@ -40,11 +40,11 @@ public class SorteioController extends DataSource {
     }
 
     public boolean alterar (TimeModel obj){
-        boolean sucesso = true;
+        boolean sucesso;
         dados = new ContentValues();
         dados.put(TimesDataModel.getId(), obj.getId());
         dados.put(TimesDataModel.getNome(), obj.getNome());
-
+        dados.put(TimesDataModel.getPt(), obj.getPt());
         sucesso = alterar(TimesDataModel.getTabelaTimesSorteados(), dados);
 
         return sucesso;

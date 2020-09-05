@@ -56,7 +56,7 @@ public class DataSource extends SQLiteOpenHelper {
     }
 
     public boolean alterar(String tabela, ContentValues dados){
-        boolean sucesso=true;
+        boolean sucesso;
         String id = dados.getAsString("id");
 
         sucesso = db.update(tabela, dados,"id=?", new String[]{id})>0;
@@ -94,6 +94,15 @@ public class DataSource extends SQLiteOpenHelper {
         }else
             vazia=true;
         return vazia;
+    }
+
+    public void redefinirTabelas(){
+        boolean sucesso =true;
+        db.execSQL("DELETE FROM times");
+        db.execSQL("delete from sqlite_sequence where name='times'");
+        db.execSQL("DELETE FROM times_sorteados");
+        db.execSQL("delete from sqlite_sequence where name='times_sorteados'");
+
     }
 
     public void insertTimes(String[] str){
