@@ -6,35 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".View.MenuInicial">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_cartola_belem" />
-
     <Button
         android:id="@+id/bt_sortear_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="83dp"
         android:background="@drawable/botao_customizado1"
         android:text="Sortear Times"
         android:textAllCaps="false"
         android:textColor="#F8FAF9"
         android:textSize="28sp"
         android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/bt_combinacoes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bt_combinacoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/botao_customizado2"
         android:text="Combinações"
         android:textAllCaps="false"
@@ -42,7 +33,17 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bt_logo"
+        android:layout_width="261dp"
+        android:layout_height="273dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/logo_cartola_belem"
+        app:layout_constraintBottom_toTopOf="@+id/bt_sortear_time"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_sortear_time"
-        app:layout_constraintVertical_bias="0.245" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
