@@ -53,6 +53,7 @@ public class SorteioController extends DataSource {
     public List<TimeModel> listar(String tabela){
         return getAllTimesModel(tabela);
     }
+
     public boolean tabelaEstaVazia(String tabela){
         return tabelaVazia(tabela);
     }

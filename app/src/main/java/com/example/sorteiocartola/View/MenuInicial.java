@@ -9,12 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.sorteiocartola.Controller.SorteioController;
 import com.example.sorteiocartola.R;
 
 public class MenuInicial extends AppCompatActivity {
     Button btSortearTim;
     Button btCombinacoes;
+    Button btCadastrarTimes;
     Button btLogo;
     Intent intent;
     int contador=0;
@@ -26,6 +26,8 @@ public class MenuInicial extends AppCompatActivity {
         setContentView(R.layout.activity_menu_inicial);
         btSortearTim = findViewById(R.id.bt_sortear_time);
         btCombinacoes = findViewById(R.id.bt_combinacoes);
+        btCadastrarTimes = findViewById(R.id.bt_cadastrar_times);
+
         btLogo = findViewById(R.id.bt_logo);
         btLogo.setStateListAnimator(null);
 
@@ -44,6 +46,15 @@ public class MenuInicial extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btCadastrarTimes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getApplicationContext(), CadastroTimes.class);
+                startActivity(intent);
+            }
+        });
+
 
         btLogo.setOnClickListener(new View.OnClickListener() {
             @Override

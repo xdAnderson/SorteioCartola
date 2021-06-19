@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="nomes">
+        <item>Jeferson Pantoja </item>
+        <item>Targayen </item>
+        <item>Thiago Borba </item>
+        <item>Moisés Mourão</item>
+        <item>Agustin Santorum</item>
+        <item>Rod Silva </item>
+        <item>Maria Eduarda Cunha</item>
+        <item>Pablo Pires</item>
+        <item>Iury Pinto </item>
+        <item>Luzair Junior</item>
+
+        <!--Times 2020
         <item>Abel Ferreira</item>
         <item>Agustin Santorum</item>
         <item>Alan</item>
@@ -65,6 +77,7 @@
         <item>Tobias Benjamin</item>
         <item>Vandinho Bretas</item>
         <item>Vinícius Amaral</item>
+        Times 2020-->
     </string-array>
 
 
